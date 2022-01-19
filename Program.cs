@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ namespace Kaprekar_s_Constant
     {
         static void Main(string[] args)
         {
-            CallWordScrambler();
+            CallAnagramInString();
             
         }
         static void CallKaprekarsConstant()
@@ -75,6 +75,56 @@ namespace Kaprekar_s_Constant
             Word = Word.ToLower();
             Console.WriteLine(Test.WordScambler(Word));
         }
+        static void CallOldEnoughToDrive()
+        {
+            methods Test = new methods();
+            int age = 0;
+            bool Valid = false;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Please enter your age");
+                    age = Convert.ToInt32(Console.ReadLine());
+                    Valid = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid Input type. Please try again");
+                }
+            } while (Valid == false);
+            Console.WriteLine(Test.OldEnoughToDrive(age));
+        }
+        static void CallPasswordLongEnough()
+        {
+            methods Test = new methods();
+            string password;
+            try
+            {
+                Console.WriteLine("Enter Your Password");
+                password = Console.ReadLine();
+                Console.WriteLine(Test.IsPasswordLongEnough(password));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid data type");
+            }
+        }
+        static void CallHolidayPackage()
+        {
+            int Groupsize;
+            methods Test = new methods();
+            try
+            {
+                Console.WriteLine("Enter your group size");
+                Groupsize = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(Test.HolidayPackage(Groupsize));
+            }
+            catch (Exception)
+            {
+                throw new Exception("Invalid data type, or value.");
+            }
+        }
     }
 
     class methods
@@ -130,7 +180,6 @@ namespace Kaprekar_s_Constant
             output = "The Vertex of y=" + a + "x^2+" + b + "x+" + c + "  is: [" + x + "," + y + "]";
             return output;
         }
-    
         public char CupSwapping(List<string> Commands)
         {
             char Cup1, Cup2, output;
@@ -226,7 +275,7 @@ namespace Kaprekar_s_Constant
         }
         public bool AnagramInString(string Word, string Sentence)
         {
-            int charactercount = 0, LoopCount = 0;
+            int LoopCount = 0;
             bool AnagramFound = false, LoopEnded = false;
             List<char> Characters = new List<char>();
             List<char> CharactersBackup = new List<char>();
@@ -307,10 +356,48 @@ namespace Kaprekar_s_Constant
             }
             return WordOutput;  // returns output
         }
+        public string OldEnoughToDrive(int age)
+        {
+            if (age < 17)
+            {
+                return "You are not old enough to drive";
+            }
+            else if (age < 18)
+            {
+                return "You are old enough to dive a car but not a lorry";
+            }
+            else
+            {
+                return "You are old enough to drive a car and a lorry";
+            }
+        }
+        public string IsPasswordLongEnough(string password)
+        {
+            if (password.Length > 8)
+            {
+                return "Password Allowed";
+            }
+            else
+            {
+                return "Password Not Allowed";
+            }
+        }
+        public float HolidayPackage(int GroupSize)
+        {
+            float output;
+            if (GroupSize < 2 || GroupSize > 10)
+            {
+                throw new Exception("Invalid Group Size. Must be between 2 and 10.");
+            }
+            else
+            {
+                output = (GroupSize * 50) + 10;
+                return output;
+            }
+        }
     }
     class Cups
     {
         public bool BallIsUnder;
         public char Name;
     }
-}
