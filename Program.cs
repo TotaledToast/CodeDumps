@@ -8,8 +8,12 @@ namespace Kaprekar_s_Constant
     {
         static void Main(string[] args)
         {
-            CallAnagramInString();
-            
+            List<string> Test = new List<String>();
+            Test = CallAllNonConsecutiveBinaryPermutations();
+            foreach (string x in Test)
+            {
+                Console.WriteLine(x);
+            }
         }
         static void CallKaprekarsConstant()
         {
@@ -43,13 +47,13 @@ namespace Kaprekar_s_Constant
             {
                 Console.WriteLine("Please Enter a command. (To Stop Enter \"STOP\")");
                 Command = Console.ReadLine();
-                if (Command == "STOP")
+                if (Command == "STOP")  //stops the loop if the user inputs "STOP"
                 {
                     LoopStopped = true;
                 }
                 else
                 {
-                    Commands.Add(Command);
+                    Commands.Add(Command); //lets the user add commands
                 }
             } while (LoopStopped == false);
             Console.WriteLine(Test.CupSwapping(Commands));
@@ -125,8 +129,41 @@ namespace Kaprekar_s_Constant
                 throw new Exception("Invalid data type, or value.");
             }
         }
-    }
+        static void CallConvertToBinary()
+        {
+            methods Test = new methods();
+            int numTester, num;
+            try
+            {
+                Console.WriteLine("Please input a length");
+                num = Convert.ToInt32(Console.ReadLine());
+                numTester = Convert.ToInt32(num);
+                Console.WriteLine(Test.ConvertToBinary(num));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid Input Type");
+            }
 
+        }
+        static List<string> CallAllNonConsecutiveBinaryPermutations()
+        {
+            methods Test = new methods();
+            List<string> NonConsecutiveBinaryPermutations = new List<string>();
+            int Length;
+            try
+            {
+                Console.WriteLine("Enter the limit of numbers you want to check (Largest Number)");
+                Length = Convert.ToInt32(Console.ReadLine());
+                NonConsecutiveBinaryPermutations = Test.AllNonConsecutiveBinaryPermutations(Length);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid Input Type");
+            }
+            return NonConsecutiveBinaryPermutations;
+        }
+    }
     class methods
     {
         public int KaprekarsConstant(int input)
@@ -150,7 +187,7 @@ namespace Kaprekar_s_Constant
                         temp = Size4;
                         Size4 = Size3;
                         Size3 = temp;
-                        if (Size3 > Size2)
+                        if (Size3 > Size2)  //if number is larger than the next number in the list, it switched them
                         {
                             temp = Size3;
                             Size3 = Size2;
@@ -173,11 +210,11 @@ namespace Kaprekar_s_Constant
         public string FindVertex(int a, int b, int c)
         {
             int x, y;
-            string output = "hi";
+            string output = "";
             x = ((-b)/(2*a));
-            y = ((a * (x * x)) + (b * x) + (c));
+            y = ((a * (x * x)) + (b * x) + (c));    //maths for turning point of a quadratic
 
-            output = "The Vertex of y=" + a + "x^2+" + b + "x+" + c + "  is: [" + x + "," + y + "]";
+            output = "The Vertex of y=" + a + "x^2+" + b + "x+" + c + "  is: [" + x + "," + y + "]";    //outputs results in text format
             return output;
         }
         public char CupSwapping(List<string> Commands)
@@ -185,19 +222,19 @@ namespace Kaprekar_s_Constant
             char Cup1, Cup2, output;
             Cups CupA = new Cups();
             Cups CupB = new Cups();
-            Cups CupC = new Cups();
+            Cups CupC = new Cups();     //callc new classes for each of the 3 cups
             CupA.BallIsUnder = false;
             CupA.Name = 'A';
-            CupB.BallIsUnder = true;
+            CupB.BallIsUnder = true; //determines the ball is under this one
             CupB.Name = 'B';
             CupC.BallIsUnder = false;
-            CupC.Name = 'C';
+            CupC.Name = 'C';        //identifies each ball
             foreach (string x in Commands)
             {
                 Cup1 = x[0];
-                Cup2 = x[1];
+                Cup2 = x[1];    //reads users input to find what cups they want to swap
 
-                if (Cup1 == 'A' && Cup2 == 'B' || Cup1 == 'B' && Cup2 == 'A')
+                if (Cup1 == 'A' && Cup2 == 'B' || Cup1 == 'B' && Cup2 == 'A')//for cups A and B
                 {
                     if (CupA.BallIsUnder == true)
                     {
@@ -207,13 +244,13 @@ namespace Kaprekar_s_Constant
                     }
                     else if (CupB.BallIsUnder == true)
                     {
-                        Console.WriteLine("Cups " + Cup1 + " and " + Cup2 + " swap places. The Ball is now in Cup A");
+                        Console.WriteLine("Cups " + Cup1 + " and " + Cup2 + " swap places. The Ball is now in Cup A");  //variation for each order of swapping
                         CupB.BallIsUnder = false;
                         CupA.BallIsUnder = true;
                     }
                     else
                     {
-                        Console.WriteLine("Cups " + Cup1 + " and " + Cup2 + " swap places. The Ball does not swap places");
+                        Console.WriteLine("Cups " + Cup1 + " and " + Cup2 + " swap places. The Ball does not swap places"); //if the ball isnt under either cup it wont de anything
                     }
                 }
                 else if (Cup1 == 'A' && Cup2 == 'C' || Cup1 == 'C' && Cup2 == 'A')
@@ -251,17 +288,17 @@ namespace Kaprekar_s_Constant
                     }
                     else
                     {
-                        Console.WriteLine("Cups " + Cup1 + " and " + Cup2 + " swap places. The Ball does not swap places");
+                        Console.WriteLine("Cups " + Cup1 + " and " + Cup2 + " swap places. The Ball does not swap places");     //repeats same thing for each set of cups
                     }
-                }
+                }//cycles for each variation of cups
                 else
                 {
-                    Console.WriteLine("This is not a valid command");
+                    Console.WriteLine("This is not a valid command"); //catches invalid commands
                 }
             }
             if (CupA.BallIsUnder == true)
             {
-                output = CupA.Name;
+                output = CupA.Name;         
             }
             else if (CupB.BallIsUnder == true)
             {
@@ -269,7 +306,7 @@ namespace Kaprekar_s_Constant
             }
             else
             {
-                output = CupC.Name;
+                output = CupC.Name;     //checks which cup the ball is under
             }
             return output;
         }
@@ -278,56 +315,56 @@ namespace Kaprekar_s_Constant
             int LoopCount = 0;
             bool AnagramFound = false, LoopEnded = false;
             List<char> Characters = new List<char>();
-            List<char> CharactersBackup = new List<char>();
+            List<char> CharactersBackup = new List<char>();     //defines new lists, and variables
             foreach (char x in Word)
             {
-                Characters.Add(x);
+                Characters.Add(x);  //for each charcter in the input word it adds that character to the character list
             }
-            CharactersBackup = Characters;
+            CharactersBackup = Characters; //creates a backup of the characters list
 
-            for (int i = 0; i < Sentence.Length-1; i++)
+            for (int i = 0; i < Sentence.Length-1; i++) //loops for the length of the sentence string inputted
             {
-                if (Characters.Contains(Sentence[i]))
+                if (Characters.Contains(Sentence[i])) // check if the current character we're checking in the string is a letter in the word we are trying to find
                 {
-                    CharactersBackup = Characters;
+                    CharactersBackup = Characters;//re-sets backup as the characters list
                     LoopCount = 0;
-                    while (AnagramFound == false || LoopEnded == false)
+                    while (AnagramFound == false || LoopEnded == false)     //will continue loop while it hasnt found an anagram or the loop isnt finished
                     {
-                        try
+                        try     //will try to do this and catch it if it doesnt work
                         {
-                            CharactersBackup.Remove(Sentence[i + LoopCount]);
+                            CharactersBackup.Remove(Sentence[i + LoopCount]);   //removes the next character in the sequence
                         }
                         catch (Exception)
                         {
-                            LoopEnded = true;
+                            LoopEnded = true;   //ends loop
                             break;
                         }
-                        LoopCount++;
-                        if (CharactersBackup.Count == 0)
+                        LoopCount++;    //increases the loop count to move to the next character
+                        if (CharactersBackup.Count == 0)    //if youve gotten rid of every letter in the word
                         {
-                            AnagramFound = true;
+                            AnagramFound = true;    //stops loop with the anagram found
                         }
                         try
                         {
-                            if (CharactersBackup.Contains(Sentence[i + LoopCount]))
+                            if (CharactersBackup.Contains(Sentence[i + LoopCount])) //checks if the character is in the word
                             {
                             }
                             else
                             {
-                                LoopEnded = true;
+                                LoopEnded = true;   //loop ends
                                 break;
                             }
                         }
                         catch (Exception x)
                         {
-                            LoopEnded = true;
+                            LoopEnded = true;   //loop ends
                             break;
                         }
                     }
 
                 }
             }
-            if (AnagramFound == true)
+            if (AnagramFound == true)   //checks if an anagram was found
             {
                 return true;
             }
@@ -395,9 +432,118 @@ namespace Kaprekar_s_Constant
                 return output;
             }
         }
+        //Old Denary To Binary Code (Very Bad)   
+        /*public string ConvertToBinary(int num)
+        {
+            int LengthOfNum, BinaryLargest = 1, Number, LargestBackup = 0, LoopCount = 0;
+            string BinaryString = "";
+            List<int> BinaryNum = new List<int>();
+            Number = num;
+            LengthOfNum = (num.ToString().Length);
+            if (Number == 1 || Number == 2)
+            {
+                BinaryLargest = 1;  //if the number inputted is 1 or 2 the largest binary number it is divisible by is 1
+            }
+            else if (num == 0)
+            {
+                Number = 0;
+            }
+            else
+            {
+                BinaryLargest = 2;
+                while (BinaryLargest < Number)
+                {
+                    LargestBackup = BinaryLargest;
+                    BinaryLargest = BinaryLargest * 2;  //cycles though c^n until it finds a number bigger than the number inputted. This allows the program to find the largest binary number you can minus from the main number
+                }
+                BinaryLargest = LargestBackup; // sets binary largest to largest number not bigger than inputted number
+            }
+            if (num / 2 == BinaryLargest) //Messy way of dealing with numbers that equal 2^n. e.g. 2,4,8,16 ect. 
+            {
+                int ZeroLength;
+                ZeroLength = (ConvertToBinary(num - 1)).Length; //finds out how many zeros there should be by finding  the length of the binary number 1 smaller than this one
+                BinaryNum.Add(1);       //add the starting 1 to the number
+                for (int i = 1; i < ZeroLength; i++)
+                {
+                    BinaryNum.Add(0);   //loops through for every time there should be a 0 and adds one
+                }
+                Number = 0; //bypasses rest of the code
+            }
+            while (Number != 0)
+            {
+                if ((Number - BinaryLargest) >= 0)
+                {
+                    BinaryNum.Add(1);
+                    Number = Number - BinaryLargest;    //if the number minus the binary largest is greater than 0 you can add 1 to the binary output
+                }
+                else
+                {
+                    BinaryNum.Add(0);   //if the number minus binary largest is less than 1 you can add a 0 to the binary output
+                }
+                BinaryLargest = BinaryLargest / 2; //cycles to next binary largest
+            }
+            if (num % 2 == 0)
+            {
+                BinaryNum.Add(0);       //adds the 0 at the end if the inputted number is even
+            }
+            foreach (int x in BinaryNum)
+            {
+                BinaryString = BinaryString.Insert(LoopCount, Convert.ToString(x)); //convertes the list storing each binary digit into a string
+                LoopCount++; // allows the .Insert to insert at the right place
+            }
+            return BinaryString;
+        }*/
+        public string ConvertToBinary(int num)
+        {
+            return Convert.ToString(num, 2);
+        }
+        public List<string> AllNonConsecutiveBinaryPermutations(int Length)
+        {
+            bool RemoveBinary = false;
+            List<string> BinaryValue = new List<string>();  //List for all out binary values
+            List<string> BinaryRemoval = new List<string>();    //List of values to remove from main list
+            for (int i = 0; i <= Length; i++)
+            {
+                BinaryValue.Add(ConvertToBinary(i));    //cycles through all designated numbers and adds their binary value to the list
+            }
+            foreach (string x in BinaryValue)
+            {
+                int Count = 0;
+                foreach (char y in x)   //checks every character in every string
+                {
+                    Count++;
+                    try
+                    {
+                        if (y == x[Count] && y == '1')  //checks if 2 consecutive are the same, and if they're 1
+                        {
+                            RemoveBinary = true;    //sets the binary value to be deleted and breaks out the loop
+                            break;
+                        }
+                    }
+                    catch (Exception)   //stops program from crashing if value is too small to have a second digit (0 and 1)
+                    {
+                    }
+                }
+                if (RemoveBinary == true)
+                {
+                    BinaryRemoval.Add(x);   //if the value needs to be deleted, adds it to the deltion list and resets the removebinary boolean
+                    RemoveBinary = false;
+                }
+            }
+            foreach (string x in BinaryRemoval)
+            {
+                BinaryValue.Remove(x);  //goes through removal list and removes all binary values specified from main list
+            }
+            return BinaryValue; //returns cleaned list
+        }
+        public string OvertimePay(List<int> Values)
+        {
+            return "hi";
+        }
     }
-    class Cups
+    class Cups  //class for giving the cups in "CupSwapping" properties
     {
         public bool BallIsUnder;
         public char Name;
     }
+}
