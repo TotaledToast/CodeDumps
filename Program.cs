@@ -8,12 +8,7 @@ namespace Kaprekar_s_Constant
     {
         static void Main(string[] args)
         {
-            List<string> Test = new List<String>();
-            Test = CallAllNonConsecutiveBinaryPermutations();
-            foreach (string x in Test)
-            {
-                Console.WriteLine(x);
-            }
+            CallOvertimePay();
         }
         static void CallKaprekarsConstant()
         {
@@ -162,6 +157,33 @@ namespace Kaprekar_s_Constant
                 Console.WriteLine("Invalid Input Type");
             }
             return NonConsecutiveBinaryPermutations;
+        }
+        static void CallOvertimePay()
+        {
+            double StartOfDay, EndOfDay, HourlyRate, OvertimeBonus;
+            List<double> Values = new List<double>();
+            methods Test = new methods();
+            try
+            {
+                Console.WriteLine("When Does Your Day Start (24 Hour Clock)");
+                StartOfDay = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("When Does Your Day End (24 Hour Clock)");
+                EndOfDay = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("What is You Houry Rate (2 s.f)");
+                HourlyRate = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("What is your overtime bonus (2 s.f)");
+                OvertimeBonus = Convert.ToDouble(Console.ReadLine());
+                Values.Add(StartOfDay);
+                Values.Add(EndOfDay);
+                Values.Add(HourlyRate);
+                Values.Add(OvertimeBonus);
+                Console.WriteLine(Test.OvertimePay(Values));
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid Inputs");
+            }
         }
     }
     class methods
@@ -536,9 +558,31 @@ namespace Kaprekar_s_Constant
             }
             return BinaryValue; //returns cleaned list
         }
-        public string OvertimePay(List<int> Values)
+        public string OvertimePay(List<double> Values)
         {
-            return "hi";
+            double StartOfDay, EndOfDay, HourlyRate, OvertimeBonus, NormalHours, OvertimeHours, totalpay;
+            StartOfDay = Values[0];
+            EndOfDay = Values[1];
+            HourlyRate = Values[2];
+            OvertimeBonus = Values[3];
+            if (EndOfDay < StartOfDay)
+            {
+                EndOfDay = EndOfDay + 24;
+                NormalHours = 17 - StartOfDay;
+                OvertimeHours = EndOfDay - 17;      //does different maths if you worked into the morning
+            }
+            else if (EndOfDay <= 17)
+            {
+                NormalHours = EndOfDay - StartOfDay;    // if theres no overtime
+                OvertimeHours = 0;
+            }
+            else
+            {
+                NormalHours = 17 - StartOfDay;
+                OvertimeHours = EndOfDay - 17;
+            }
+            totalpay = (NormalHours * HourlyRate) + (OvertimeHours * HourlyRate * OvertimeBonus);       //simple maths
+            return "£" + totalpay.ToString();
         }
     }
     class Cups  //class for giving the cups in "CupSwapping" properties
