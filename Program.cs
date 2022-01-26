@@ -8,7 +8,16 @@ namespace Kaprekar_s_Constant
     {
         static void Main(string[] args)
         {
-            CallOvertimePay();
+            methods Programs = new methods();
+            /*List<string> Test = new List<string>();
+            Test = CallAllNonConsecutiveBinaryPermutations();
+            foreach (string x in Test)
+            {
+                Console.WriteLine(x);
+            }*/
+            List<Tcar> ListOfCars = new List<Tcar>();
+            ListOfCars = MakeListOfCars(ListOfCars);
+            Console.WriteLine(Programs.AverageCarPrice(ListOfCars));
         }
         static void CallKaprekarsConstant()
         {
@@ -184,6 +193,41 @@ namespace Kaprekar_s_Constant
             {
                 Console.WriteLine("Invalid Inputs");
             }
+        }
+        static List<Tcar> MakeListOfCars(List<Tcar> InputList)
+        {
+            bool stop = false;
+            do
+            {
+                Tcar Car = new Tcar();
+                Car.Make = "";
+                Car.Model = "";
+                Car.EngineSize = 0d;
+                Car.Price = 0d;
+                try
+                {
+                    Console.WriteLine("What Make is your Car?");
+                    Car.Make = Console.ReadLine();
+                    Console.WriteLine("What Model is your Car?");
+                    Car.Model = Console.ReadLine();
+                    Console.WriteLine("What engine size is your Car (in Litres) ?");
+                    Car.EngineSize = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine("How much does you car cost?");
+                    Car.Price = Convert.ToDouble(Console.ReadLine());
+                    InputList.Add(Car);
+                    Console.WriteLine("Continue or stop? (Enter \"STOP\" to stop.)");
+                    if (Console.ReadLine() == "STOP")
+                    {
+                        stop = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("INVALID INPUT TYPE");
+                    stop = true;
+                }
+            } while (stop == false);
+            return InputList;
         }
     }
     class methods
@@ -584,10 +628,26 @@ namespace Kaprekar_s_Constant
             totalpay = (NormalHours * HourlyRate) + (OvertimeHours * HourlyRate * OvertimeBonus);       //simple maths
             return "£" + totalpay.ToString();
         }
+        public double AverageCarPrice(List<Tcar> ListOfCars)
+        {
+            double output, totalprice = 0d;
+            foreach (Tcar x in ListOfCars)
+            {
+                totalprice = totalprice + x.Price;
+            }
+            output = totalprice / ListOfCars.Count();
+            return output;
+        }
     }
     class Cups  //class for giving the cups in "CupSwapping" properties
     {
         public bool BallIsUnder;
         public char Name;
     }
+    class Tcar
+    {
+        public string Make, Model;
+        public double EngineSize, Price;
+    }
+
 }
