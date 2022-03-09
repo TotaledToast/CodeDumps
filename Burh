@@ -1,0 +1,85 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace FIle_Saving
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> Test = new List<string>
+                {
+                "Hi There", "How are You?"
+            };
+            List<string> Letters = new List<string>
+            {
+                "a", "e", "i", "o", "u"
+            };
+            string FilePath = @"N:\0 A Level Comp\Random\c#\Coding Tasks";
+            //CreateFile(FilePath, "Hurn");
+            //WriteToFile(FilePath + @"\Hurn.txt", Test);
+            FindNumbers(FilePath + @"\Num.txt");
+        }
+        static void WriteToFile(string FilePath, List<string> Contents)
+        {
+            //string FilePath = @"N:\0 A Level Comp\Random\c#\Coding Tasks\" + FileName + ".txt";
+            //System.IO.File.Create(FilePath);
+            System.IO.File.AppendAllLines(FilePath, Contents);
+        }
+        static void CreateFile(string FilePath, string Name)
+        {
+            System.IO.File.WriteAllText(FilePath + "\\" +  Name + ".txt", "");
+        }
+        static void ReadFile(string FilePath)
+        {
+            Console.WriteLine(System.IO.File.ReadAllText(FilePath));
+        }
+        static void CountLine(string FilePath)
+        {
+            Console.WriteLine(System.IO.File.ReadAllLines(FilePath).Length);
+        }
+        static void CountLetters(string FilePath, List<string> Letters)
+        {
+            string[] File = System.IO.File.ReadAllLines(FilePath);
+            int LetterCount = 0;
+            foreach (string x in File)
+            {
+                foreach (char y in x)
+                {
+                    if (Letters.Contains(y.ToString()) == true)
+                    {
+                        LetterCount++;
+                    }
+                }
+            }
+            Console.WriteLine(LetterCount);
+        }
+        static void FindNumbers(string FilePath)
+        {
+            string Numbers = "";
+            string[] File = System.IO.File.ReadAllLines(FilePath);
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            foreach (string x in File)
+            {
+                foreach (char y in x)
+                {
+                    if (char.IsDigit(y) == true)
+                    {
+                        Numbers = Numbers + y;
+                    }
+                }
+            }
+            Console.WriteLine(Numbers);
+        }
+    }
+}
